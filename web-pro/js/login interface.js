@@ -11,15 +11,17 @@
                 return;
             }
 
-            if (username === "admin" && password === "123456") {
-                // 管理员登录
-                localStorage.setItem("username", username);
-                localStorage.setItem("role", "admin");
-                window.location.href = "main interface.html";
-            } else {
-                // 普通用户登录（可扩展为后台验证）
-                localStorage.setItem("username", username);
-                localStorage.setItem("role", "user");
-                window.location.href = "main interface.html";
-            }
+            // if (username === "admin" && password === "123456") {
+            //     // 管理员登录
+            //     localStorage.setItem("username", username);
+            // localStorage.setItem("loggedInUsername", username); 
+            // localStorage.setItem("role", "admin");
+            // window.location.href = "main interface.html";
+            // } else {
+            //     // 普通用户登录（可扩展为后台验证）
+            //     localStorage.setItem("username", username);
+            //     localStorage.setItem("loggedInUsername", username); 
+            //     localStorage.setItem("role", "user");
+            //     window.location.href = "main interface.html";
+            // }
         });

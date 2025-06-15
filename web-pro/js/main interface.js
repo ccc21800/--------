@@ -1,7 +1,6 @@
         //选项标签内容切换
         const tabLinks = document.querySelectorAll('.tab-link')
         const tabContents = document.querySelectorAll('.tab-content')
-        
         tabLinks.forEach(link => {
     link.addEventListener('click', function (e) {
         e.preventDefault();
@@ -17,6 +16,23 @@
         document.getElementById(targetTab).classList.add('active');
     });
 });
+
+        // tabLinks.forEach(link => {
+        //     link.addEventListener('click', function(e) {
+        //         e.preventDefault()
+        //         const targetTab = this.getAttribute('data-tab')
+        //         // 如果用户点击“管理界面”，但不是管理员，阻止访问
+        // if (targetTab === "tab6" && role !== "admin") {
+        //     alert("无权限访问该页面！")
+        //     return
+        // }
+        //         tabContents.forEach(content => {
+        //             content.classList.remove('active')
+        //         })
+        //         const activeTab = document.getElementById(targetTab)
+        //         activeTab.classList.add('active')
+        //     })
+        // })
         //日期显示
         const today = new Date()
         const year = today.getFullYear()
@@ -61,14 +77,15 @@
         signinBtn.disabled = true
     })
         //个人主页显示用户名
-            document.addEventListener('DOMContentLoaded', function () {
+           document.addEventListener('DOMContentLoaded', function () {
     const username = localStorage.getItem('loggedInUsername');
     if (username) {
         document.getElementById('displayName').textContent = username + '，';
     }
-    });
-    //     const username = localStorage.getItem("username"); // 从浏览器获取存储的用户名
-    //     document.getElementById("displayName").textContent = username || "游客"; // 显示用户名或默认“游客”
+});
+
+        const username = localStorage.getItem("displayName"); // 从浏览器获取存储的用户名
+        document.getElementById("displayName").textContent = username || "游客"; // 显示用户名或默认“游客”
     //     // 登录成功时：
 localStorage.clear(); // 清除之前的用户信息
 // 退出登录
@@ -78,7 +95,7 @@ localStorage.clear(); // 清除之前的用户信息
     }
 // 存储当前用户信息
 localStorage.setItem("loggedInUsername", username);
-localStorage.setItem("role", admin); // "admin" 或 "user"
+localStorage.setItem("role", userRole); // "admin" 或 "user"
 
         // 商品兑换（支持同步到个人物品）
         const redeemButtons = document.querySelectorAll('.change-btn')
