@@ -1,22 +1,22 @@
         //选项标签内容切换
         const tabLinks = document.querySelectorAll('.tab-link')
         const tabContents = document.querySelectorAll('.tab-content')
+        
         tabLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault()
-                const targetTab = this.getAttribute('data-tab')
-                // 如果用户点击“管理界面”，但不是管理员，阻止访问
+    link.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetTab = this.getAttribute('data-tab');
+
+        // 管理界面权限判断
         if (targetTab === "tab6" && role !== "admin") {
-            alert("无权限访问该页面！")
-            return
+            alert("无权限访问该页面！");
+            return;
         }
-                tabContents.forEach(content => {
-                    content.classList.remove('active')
-                })
-                const activeTab = document.getElementById(targetTab)
-                activeTab.classList.add('active')
-            })
-        })
+
+        tabContents.forEach(content => content.classList.remove('active'));
+        document.getElementById(targetTab).classList.add('active');
+    });
+});
         //日期显示
         const today = new Date()
         const year = today.getFullYear()
@@ -77,8 +77,9 @@ localStorage.clear(); // 清除之前的用户信息
     window.location.href = 'loginInterface.html'; // 返回登录页
     }
 // 存储当前用户信息
-localStorage.setItem("username", newUser.username);
-localStorage.setItem("items", JSON.stringify(newUser.items));
+localStorage.setItem("loggedInUsername", username);
+localStorage.setItem("role", admin); // "admin" 或 "user"
+
         // 商品兑换（支持同步到个人物品）
         const redeemButtons = document.querySelectorAll('.change-btn')
         redeemButtons.forEach(button => {
@@ -138,13 +139,26 @@ window.addEventListener('load', loadOwnedItems)
 // 每次切换到“个人物品”页面时也刷新一下显示
 document.querySelector('[data-tab="tab4"]').addEventListener('click', loadOwnedItems)
     //管理界面进入权限
-    const role = localStorage.getItem("role")
-    const tab6 = document.querySelector('[data-tab="tab6"]')
-    const content6 = document.getElementById("tab6")
-    if (role !== "admin") {
-        if (tab6) tab6.style.display = "none"
-        if (content6) content6.innerHTML = "<p style='color:red;'>无权限访问此内容。</p>"
-    }
+    // 获取用户角色
+const role = localStorage.getItem("role") || "user"; // 默认是普通用户
+
+// 获取管理界面的菜单项和内容容器
+const adminTabLink = document.querySelector('[data-tab="tab6"]');
+const adminTabContent = document.getElementById("tab6");
+
+// 如果不是管理员，隐藏菜单项并禁止访问管理内容
+if (role !== "admin") {
+    if (adminTabLink) adminTabLink.style.display = "none";
+    if (adminTabContent) adminTabContent.innerHTML = "<p style='color:red; text-align:center;'>无权限访问此内容。</p>";
+}
+
+    // const role = localStorage.getItem("role")
+    // const tab6 = document.querySelector('[data-tab="tab6"]')
+    // const content6 = document.getElementById("tab6")
+    // if (role !== "admin") {
+    //     if (tab6) tab6.style.display = "none"
+    //     if (content6) content6.innerHTML = "<p style='color:red;'>无权限访问此内容。</p>"
+    // }
 //     const role = localStorage.getItem("role") || "user"// 默认普通用户
 //     const adminLink = document.querySelector('[data-tab="tab6"]')
 // // 如果不是管理员，隐藏“管理界面”菜单项

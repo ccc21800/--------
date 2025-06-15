@@ -21,7 +21,7 @@ const db = mysql.createConnection({
 
 app.use(express.static(path.join(__dirname, 'web-pro')));
 app.get('/', (req, res) => {
-  const filePath = path.join(__dirname, 'web-pro', 'loginInterface.html');
+  const filePath = path.join(__dirname, 'web-pro', 'registration interface.html');
   fs.readFile(filePath, 'utf8', (err, data) => {
     if (err) {
       res.status(500).send('服务器读取 login 页面失败');
@@ -54,7 +54,7 @@ app.post('/login', (req, res) => {
 });
 
 app.post('/register', async (req, res) => {
-  const { stuid,username, password } = req.body;
+  const { stuid, username, password } = req.body;
 
   if (!stuid || !username || !password) {
     return res.json({ success: false, message: '学号，用户名和密码不能为空' });
@@ -62,8 +62,14 @@ app.post('/register', async (req, res) => {
 
 //   const hashedPassword = bcrypt.hashSync(password, 10);
 
-  const sql = 'INSERT INTO user (stuid ,username, password) VALUES (?, ?,?)';
-  db.execute(sql, [ stuid ,username, password], (err, result) => {
+  // 判断是否是管理员账号（你可以自定义条件）
+  let role = 'user';
+  if (stuid === 'admin001' || username.toLowerCase() === 'admin') {
+    role = 'admin';
+  }
+
+  const sql = 'INSERT INTO user (stuid, username, password, role) VALUES (?, ?, ?, ?)';
+  db.execute(sql, [stuid, username, password, role], (err, result) => {
     if (err) {
       if (err.code === 'ER_DUP_ENTRY') {
         return res.json({ success: false, message: '用户名已存在' });
@@ -72,7 +78,7 @@ app.post('/register', async (req, res) => {
       return res.json({ success: false, message: '注册失败' });
     }
 
-    res.json({ success: true, message: '注册成功！' });
+    res.json({ success: true, message: `注册成功！您已被授予${role === 'admin' ? '管理员' : '普通用户'}权限` });
   });
 });
 
