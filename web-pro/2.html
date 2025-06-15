@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>侧边栏切换内容</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+        }
+
+        /* 侧边栏样式 */
+        .sidebar {
+            width: 250px;
+            height: 100%;
+            background-color: #333;
+            color: white;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding-top: 20px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 15px;
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #575757;
+        }
+
+        /* 主内容区样式 */
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+            height: 100%;
+            background-color: #f4f4f4;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 侧边栏 -->
+    <div class="sidebar">
+        <a href="#" class="tab-link" data-tab="tab1">选项 1</a>
+        <a href="#" class="tab-link" data-tab="tab2">选项 2</a>
+        <a href="#" class="tab-link" data-tab="tab3">选项 3</a>
+    </div>
+
+    <!-- 主内容区 -->
+    <div class="content">
+        <div id="tab1" class="tab-content active">
+            <h2>选项 1 内容</h2>
+            <p>这里是选项 1 的内容。</p>
+        </div>
+        <div id="tab2" class="tab-content">
+            <h2>选项 2 内容</h2>
+            <p>这里是选项 2 的内容。</p>
+        </div>
+        <div id="tab3" class="tab-content">
+            <h2>选项 3 内容</h2>
+            <p>这里是选项 3 的内容。</p>
+        </div>
+    </div>
+
+    <script>
+        // 获取所有侧边栏链接和内容区域
+        const tabLinks = document.querySelectorAll('.tab-link');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        // 点击侧边栏链接时切换内容
+        tabLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                // 获取目标内容的 id
+                const targetTab = this.getAttribute('data-tab');
+
+                // 隐藏所有内容
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                });
+
+                // 显示目标内容
+                const activeTab = document.getElementById(targetTab);
+                activeTab.classList.add('active');
+            });
+        });
+    </script>
+
+</body>
+</html>
+<!-- 解释：
+HTML 结构：
+
+侧边栏是一个包含多个链接 (<a>) 的 div，每个链接的 data-tab 属性与右侧的内容区域 ID 相对应。
+
+右侧的 content 区域包含多个 div，每个 div 代表一个选项的内容，初始状态下只有第一个 div 显示（通过 active 类控制）。
+
+CSS 样式：
+
+使用 position: fixed 将侧边栏固定在页面左侧。
+
+.tab-content 默认是 display: none，通过 active 类来显示当前选中的内容。
+
+侧边栏的链接在悬停时会有背景色变化。
+
+JavaScript 功能：
+
+为每个侧边栏链接添加 click 事件监听器。
+
+每当点击一个链接时，JavaScript 会隐藏所有的内容区域，并显示与点击链接相关的内容区域（通过 data-tab 属性找到对应的内容区域）。
+
+自定义：
+你可以修改侧边栏的宽度、背景色和字体样式来满足你的设计需求。
+
+添加更多选项和内容块，按照需要扩展。
+
+这个简单的布局和交互方式可以作为你更复杂应用的基础，甚至可以根据需要扩展为更动态的页面。 -->

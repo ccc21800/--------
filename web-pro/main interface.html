@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模拟课堂系统</title>
+    <link rel="stylesheet" href="css/main interface.css">
+</head>
+<body>
+    <div class="choose">
+        <span>个人中心</span>
+        <a href="#" class="tab-link" data-tab="tab1">签到</a>
+        <a href="#" class="tab-link" data-tab="tab2">积分商城</a>
+        <a href="#" class="tab-link" data-tab="tab3">我的课程</a>
+        <a href="#" class="tab-link" data-tab="tab4">个人物品</a>
+        <a href="#" class="tab-link" data-tab="tab5">个人主页</a>
+        <a href="#" class="tab-link" data-tab="tab6">管理界面</a>
+    </div>
+    <div class="content">
+        <div id="tab1" class="tab-content active">
+            <h2 style="text-align: center;">签到</h2>
+            <p style="text-align: center;font-size: 20px;">欢迎进入模拟课堂系统</p>
+            <p style="text-align: center;font-size: 20px;">这是签到的界面，今日签到可加10积分</p>
+            <p id="point-count" style="text-align: center; font-size: 18px;">当前积分：0</p>
+            <p id="current-date" style="text-align: center; font-size: 18px;"></p>
+            <div style="text-align: center;">
+                <button id="signin-btn" style="width: 25%; height: 45px; text-align: center;background-color: rgb(135, 187, 235);color: white;cursor: pointer;">
+                    点此签到
+                </button>
+                <p id="signin-message"></p>
+            </div>
+        </div>
+        <div id="tab2" class="tab-content">
+            <h2>积分商城</h2>
+            <p>这里是积分商城的内容</p>
+            <div class="box1">
+                <li>
+                    <img src="" alt="也许有商品吧" style="width: 100%; height: 200px; object-fit: cover;">
+                    <h3 style="text-align: center;">也许有商品吧</h3>
+                    <p style="text-align: center;">积分：10</p>
+                    <button class="change-btn" data-cost="10" data-name="也许有商品吧" style="display: block; margin: 10px auto; padding: 5px 10px; cursor: pointer;">兑换</button>
+                    <button class="delete-btn" style="display: block; margin: 10px auto; padding: 5px 10px; cursor: pointer;">删除</button>
+                </li>
+                <li>
+                    <img src="" alt="大概有商品吧" style="width: 100%; height: 200px; object-fit: cover;">
+                    <h3 style="text-align: center;">大概有商品吧</h3>
+                    <p style="text-align: center;">积分：20</p>
+                    <button class="change-btn" data-cost="20" data-name="大概有商品吧" style="display: block; margin: 10px auto; padding: 5px 10px; cursor: pointer;">兑换</button>
+                    <button class="delete-btn" style="display: block; margin: 10px auto; padding: 5px 10px; cursor: pointer;">删除</button>
+                </li>
+                <li>
+                    <img src="" alt="可能有商品吧" style="width: 100%; height: 200px; object-fit: cover;">
+                    <h3 style="text-align: center;">可能有商品吧</h3>
+                    <p style="text-align: center;">积分：30</p>
+                    <button class="change-btn" data-cost="30" data-name="可能有商品吧" style="display: block; margin: 10px auto; padding: 5px 10px; cursor: pointer;">兑换</button>
+                    <button class="delete-btn" style="display: block; margin: 10px auto; padding: 5px 10px; cursor: pointer;">删除</button>
+                </li>
+                <li>
+                    <img src="" alt="或许有商品吧" style="width: 100%; height: 200px; object-fit: cover;">
+                    <h3 style="text-align: center;">或许有商品吧</h3>
+                    <p style="text-align: center;">积分：40</p>
+                    <button class="change-btn" data-cost="40" data-name="或许有商品吧" style="display: block; margin: 10px auto; padding: 5px 10px; cursor: pointer;">兑换</button>
+                    <button class="delete-btn" style="display: block; margin: 10px auto; padding: 5px 10px; cursor: pointer;">删除</button>
+                </li>
+                <li>
+                    <img src="" alt="肯定有商品吧" style="width: 100%; height: 200px; object-fit: cover;">
+                    <h3 style="text-align: center;">肯定有商品吧</h3>
+                    <p style="text-align: center;">积分：50</p>
+                    <button class="change-btn" data-cost="50" data-name="肯定有商品吧" style="display: block; margin: 10px auto; padding: 5px 10px; cursor: pointer;">兑换</button>
+                    <button class="delete-btn" style="display: block; margin: 10px auto; padding: 5px 10px; cursor: pointer;">删除</button>
+                </li>
+                <li>
+                    <img src="" alt="反正现在没有商品吧" style="width: 100%; height: 200px; object-fit: cover;">
+                    <h3 style="text-align: center;">反正现在没有商品吧</h3>
+                    <p style="text-align: center;">积分：60</p>
+                    <button class="change-btn" data-cost="60" data-name="反正现在没有商品吧" style="display: block; margin: 10px auto; padding: 5px 10px; cursor: pointer;">兑换</button>
+                    <button class="delete-btn" style="display: block; margin: 10px auto; padding: 5px 10px; cursor: pointer;">删除</button>
+                </li>
+                <li>
+                    <img src="" alt="后面会有的商品吧" style="width: 100%; height: 200px; object-fit: cover;">
+                    <h3 style="text-align: center;">后面会有的商品吧</h3>
+                    <p style="text-align: center;">积分：70</p>
+                    <button class="change-btn" data-cost="70" data-name="后面会有的商品吧" style="display: block; margin: 10px auto; padding: 5px 10px; cursor: pointer;">兑换</button>
+                    <button class="delete-btn" style="display: block; margin: 10px auto; padding: 5px 10px; cursor: pointer;">删除</button>
+                </li>
+                <li>
+                    <img src="" alt="可能需要添加商品吧" style="width: 100%; height: 200px; object-fit: cover;">
+                    <h3 style="text-align: center;">可能需要添加商品吧</h3>
+                    <p style="text-align: center;">积分：80</p>
+                    <button class="change-btn" data-cost="80" data-name="可能需要添加商品吧" style="display: block; margin: 10px auto; padding: 5px 10px; cursor: pointer;">兑换</button>
+                    <button class="delete-btn" style="display: block; margin: 10px auto; padding: 5px 10px; cursor: pointer;">删除</button>
+                </li>
+                <li>
+                    <img src="" alt="包会有商品吧" style="width: 100%; height: 200px; object-fit: cover;">
+                    <h3 style="text-align: center;">包会有商品吧</h3>
+                    <p style="text-align: center;">积分：90</p>
+                    <button class="change-btn" data-cost="90" data-name="包会有商品吧" style="display: block; margin: 10px auto; padding: 5px 10px; cursor: pointer;">兑换</button>
+                    <button class="delete-btn" style="display: block; margin: 10px auto; padding: 5px 10px; cursor: pointer;">删除</button>
+                </li>
+                <li>
+                    <img src="" alt="一定会有商品吧" style="width: 100%; height: 200px; object-fit: cover;">
+                    <h3 style="text-align: center;">一定会有商品吧</h3>
+                    <p style="text-align: center;">积分：100</p>
+                    <button class="change-btn" data-cost="100" data-name="一定会有商品吧" style="display: block; margin: 10px auto; padding: 5px 10px; cursor: pointer;">兑换</button>
+                    <button class="delete-btn" style="display: block; margin: 10px auto; padding: 5px 10px; cursor: pointer;">删除</button>
+                </li>
+            </div>
+        </div>
+        <div id="tab3" class="tab-content">
+            <h2>我的课程</h2>
+            <p>这里是我的课程的内容</p>
+        </div>
+        <div id="tab4" class="tab-content">
+            <h2>个人物品</h2>
+            <p>这里是个人物品的内容</p>
+            <h3>你拥有的物品：</h3>
+            <ul id="owned-items-list"></ul> 
+        </div>
+        <div id="tab5" class="tab-content">
+            <h2>个人主页</h2>
+            <p>这里是个人主页的内容</p>
+            <h2>欢迎，<span id="displayName"></span>欢迎使用模拟课堂系统</h2>
+            <button onclick="logout()">退出登录</button>
+        </div>
+        <div id="tab6" class="tab-content">
+            <h2>管理界面</h2>
+            <!-- <p>这里是管理界面的登录页面</p> -->
+            <h3>添加商品</h3>
+            <form id="add-product-form">
+                <label>商品名称: <input type="text" id="product-name" required></label><br><br>
+                <label>商品积分: <input type="number" id="product-points" required></label><br><br>
+                <label>图片链接: <input type="text" id="product-img" required></label><br><br>
+                <button type="submit">添加商品</button>
+            </form>
+            <h3>学生登录记录</h3>
+            <ul id="login-records"></ul>
+        </div>
+    </div>
+<script src="js/main interface.js"></script>
+</body>
+</html>

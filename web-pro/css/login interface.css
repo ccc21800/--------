@@ -1,0 +1,63 @@
+*{
+        margin: 0;
+        padding: 0;
+    }
+    h1{
+        text-align: center;
+        margin-top: 100px;
+        color: white;
+    }
+    body {
+        font-family: '微软雅黑';
+        background: rgb(77, 117, 219);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .box1{
+        background: white;
+        padding: 40px;
+        margin: 100px;
+        border-radius: 10px;
+        width: 400px;
+        text-align: center;
+    }
+    h2 {
+        color: gray;
+        margin-bottom: 30px;
+    }
+    .import{
+        margin-bottom: 25px;
+        text-align: left;
+    }
+    label {
+        display: block;
+        margin-bottom: 8px;
+        color: gray;
+        font-weight: 500;
+    }
+    input {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid rgb(192, 189, 189);
+        border-radius: 6px;
+        font-size: 16px;
+        transition: border 0.3s;
+    }
+    button {
+        width: 100%;
+        padding: 14px;
+        background: rgb(28, 218, 206);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+    h6{
+        margin-top: 15px;
+        color: rgb(158, 157, 157);
+        cursor: pointer;
+    }
