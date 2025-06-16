@@ -19,6 +19,7 @@ const db = mysql.createConnection({
 });
 
 
+
 app.use(express.static(path.join(__dirname, 'web-pro')));
 app.get('/', (req, res) => {
   const filePath = path.join(__dirname, 'web-pro', 'registration interface.html');
