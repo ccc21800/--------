@@ -87,4 +87,85 @@ app.listen(3000, () => {
   console.log('后端服务器已启动：http://localhost:3000');
 });
 
+app.post('/signin', (req, res) => {
+  const { username } = req.body;
+  if (!username) {
+    return res.json({ success: false, message: '用户名缺失' });
+  }
 
+  const today = new Date().toLocaleDateString();
+
+  const getSql = 'SELECT integral, last_signin FROM user WHERE username = ?';
+  db.execute(getSql, [username], (err, results) => {
+    if (err || results.length === 0) {
+      return res.json({ success: false, message: '获取用户信息失败' });
+    }
+
+    const user = results[0];
+    if (user.last_signin === today) {
+      return res.json({ success: false, message: '今天已经签过到了' });
+    }
+
+    const newPoints = (user.integral || 0) + 10;
+    const updateSql = 'UPDATE user SET integral = ?, last_signin = ? WHERE username = ?';
+    db.execute(updateSql, [newPoints, today, username], (updateErr) => {
+      if (updateErr) {
+        return res.json({ success: false, message: '更新积分失败' });
+      }
+
+      res.json({ success: true, integral: newPoints });
+    });
+  });
+});
+
+app.get('/user-info', (req, res) => {
+  const username = req.query.username;
+  if (!username) {
+    return res.json({ success: false, message: '缺少用户名' });
+  }
+
+  const sql = 'SELECT integral, last_signin FROM user WHERE username = ?';
+  db.execute(sql, [username], (err, results) => {
+    if (err || results.length === 0) {
+      return res.json({ success: false, message: '用户不存在' });
+    }
+
+    res.json({ 
+      success: true, 
+      integral: results[0].integral, 
+      last_signin: results[0].last_signin || ''
+    });
+  });
+});
+
+app.post('/redeem', (req, res) => {
+  const { username, cost, itemName } = req.body;
+
+  if (!username || !cost || !itemName) {
+    return res.json({ success: false, message: '缺少必要信息' });
+  }
+
+  const getSql = 'SELECT integral FROM user WHERE username = ?';
+  db.execute(getSql, [username], (err, results) => {
+    if (err || results.length === 0) {
+      return res.json({ success: false, message: '用户不存在' });
+    }
+
+    const userPoints = results[0].integral || 0;
+
+    if (userPoints < cost) {
+      return res.json({ success: false, message: '积分不足' });
+    }
+
+    const newPoints = userPoints - cost;
+    const updateSql = 'UPDATE user SET integral = ? WHERE username = ?';
+
+    db.execute(updateSql, [newPoints, username], (updateErr) => {
+      if (updateErr) {
+        return res.json({ success: false, message: '积分扣除失败' });
+      }
+
+      res.json({ success: true, integral: newPoints, message: `兑换成功，获得：${itemName}` });
+    });
+  });
+});
