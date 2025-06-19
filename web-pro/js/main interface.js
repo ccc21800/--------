@@ -1,14 +1,33 @@
 // 登录与身份识别
-const role = localStorage.getItem('role') || 'user';
+let role = 'user'; // 默认角色为 user
 const username = localStorage.getItem('loggedInUsername');
-
 if (!username) {
     alert('请先登录！');
     window.location.href = 'loginInterface.html';
+} else {
+    // 从数据库查询身份信息
+    fetch(`http://localhost:3000/getRole?username=${encodeURIComponent(username)}`)
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                role = data.role;
+                localStorage.setItem('role', role); // 如果你希望保留，也可以设置
+                // 初始化页面内容
+                initPage();
+            } else {
+                alert('获取身份失败：' + data.message);
+                window.location.href = 'loginInterface.html';
+            }
+        })
+        .catch(err => {
+            console.error('角色请求失败', err);
+            alert('服务器连接失败');
+            window.location.href = 'loginInterface.html';
+        });
 }
 
 // 页面初始化
-window.addEventListener('load', () => {
+function initPage() {
     initTabs();
     initSignin();
     initPoints();
@@ -16,7 +35,7 @@ window.addEventListener('load', () => {
     initOwnedItems();
     initAdminView();
     renderUsername();
-});
+}
 
 // 标签切换函数
 function initTabs() {
@@ -197,3 +216,85 @@ function initAdminView() {
     }
 }
 
+function loadProducts() {
+    fetch('http://localhost:3000/api/commodities')
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                const ul = document.getElementById('commodity-list');
+                ul.innerHTML = '';
+                data.commodities.forEach(item => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                        <img src="${item.image_url || ''}" alt="${item.trade_name}" style="width: 100%; height: 200px; object-fit: cover;">
+                        <h3 style="text-align: center;">${item.trade_name}</h3>
+                        <p style="text-align: center;">积分：${item.price}</p>
+                        <button class="change-btn" data-cost="${item.price}" data-name="${item.trade_name}" style="display: block; margin: 10px auto;">兑换</button>
+                        ${role === 'admin' ? `<button class="delete-btn" data-id="${item.id}" style="display: block; margin: 10px auto;">删除</button>` : ''}
+                    `;
+                    ul.appendChild(li);
+                });
+
+                // 绑定兑换按钮事件（已有逻辑复用）
+                initShop();
+
+                // 绑定删除按钮事件（管理员专用）
+                if (role === 'admin') {
+                    document.querySelectorAll('.delete-btn').forEach(btn => {
+                        btn.addEventListener('click', async () => {
+                            const id = btn.getAttribute('data-id');
+                            if (confirm('确定删除该商品？')) {
+                                const res = await fetch(`http://localhost:3000/api/commodities/${id}`, { method: 'DELETE' });
+                                const result = await res.json();
+                                if (result.success) {
+                                    alert('商品已删除');
+                                    loadProducts(); // 刷新商品列表
+                                } else {
+                                    alert('删除失败');
+                                }
+                            }
+                        });
+                    });
+                }
+            }
+        });
+}
+
+function initAdminView() {
+    const adminTab = document.querySelector('[data-tab="tab6"]');
+    const adminContent = document.getElementById('tab6');
+
+    if (role !== 'admin') {
+        adminTab.style.display = 'none';
+        adminContent.innerHTML = "<p style='text-align: center; color: red;'>无权限访问</p>";
+    } else {
+        // 绑定添加商品事件
+        const form = document.getElementById('add-product-form');
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const trade_name = document.getElementById('product-name').value.trim();
+            const price = parseInt(document.getElementById('product-points').value);
+            const image_url = document.getElementById('product-img').value.trim();
+
+            if (!trade_name || price < 0 || !image_url) {
+                alert('请填写完整的商品信息');
+                return;
+            }
+
+            const res = await fetch('http://localhost:3000/api/commodities', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ trade_name, price, image_url })
+            });
+
+            const result = await res.json();
+            if (result.success) {
+                alert('商品添加成功');
+                form.reset();
+                loadProducts(); // 商城自动刷新商品列表
+            } else {
+                alert('添加失败：' + result.message);
+            }
+        });
+    }
+}
