@@ -38,6 +38,13 @@ app.post('/login', (req, res) => {
     return res.json({ success: false, message: '用户名和密码不能为空' });
   }
 
+  res.json({
+  success: true,
+  message: '登录成功',
+  role: results[0].role, // ← 返回 role
+  username: results[0].username
+});
+
   const sql = 'SELECT * FROM user WHERE username = ? AND password = ?';
   db.execute(sql, [username, password], (err, results) => {
     if (err) {
