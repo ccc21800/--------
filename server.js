@@ -18,8 +18,6 @@ const db = mysql.createConnection({
   database: 'class_sim'
 });
 
-
-
 app.use(express.static(path.join(__dirname, 'web-pro')));
 app.get('/', (req, res) => {
   const filePath = path.join(__dirname, 'web-pro', 'registration interface.html');
@@ -37,7 +35,6 @@ app.post('/login', (req, res) => {
   if (!username || !password) {
     return res.json({ success: false, message: '用户名和密码不能为空' });
   }
-
 
   const sql = 'SELECT * FROM user WHERE username = ? AND password = ?';
   db.execute(sql, [username, password], (err, results) => {
@@ -209,7 +206,6 @@ app.get('/api/commodities', (req, res) => {
   });
 });
 
-
 app.delete('/api/commodities/:id', (req, res) => {
   const { id } = req.params;
   const sql = 'DELETE FROM commodity WHERE id = ?';
@@ -218,7 +214,6 @@ app.delete('/api/commodities/:id', (req, res) => {
     res.json({ success: true, message: '删除成功' });
   });
 });
-
 
 app.get('/getRole', (req, res) => {
   const username = req.query.username;
